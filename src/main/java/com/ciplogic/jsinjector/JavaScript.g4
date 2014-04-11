@@ -2,8 +2,8 @@ grammar JavaScript;
 
 
 @lexer::members {
-    public static final int WHITESPACE = 1;          
-    public static final int COMMENTS = 2;          
+    public static final int WHITESPACE = 1;
+    public static final int COMMENTS = 2;
 }
 
 program : expression*;
@@ -59,7 +59,7 @@ LINE_COMMENT : '//' .*? '\n' -> channel(COMMENTS);
 
 MULTILINE_COMMENT : '/*' .*? '*/' -> channel(COMMENTS);
 
-REGEXP : '/' (REGEXP_ESC|.)*? '/';
+REGEXP : '/' (REGEXP_ESC|[^\n])*? '/';
 
 REGEXP_ESC : '\\/';
 

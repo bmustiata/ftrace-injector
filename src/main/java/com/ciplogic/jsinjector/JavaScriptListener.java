@@ -1,5 +1,5 @@
-package com.ciplogic.jsinjector;// Generated from JavaScript.g4 by ANTLR 4.1
-
+// Generated from JavaScript.g4 by ANTLR 4.2.2
+package com.ciplogic.jsinjector;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
