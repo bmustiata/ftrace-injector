@@ -3,15 +3,12 @@ package com.ciplogic.jsinjector.web;
 import com.ciplogic.jsinjector.IOInjectTraceWrap;
 import org.apache.commons.io.IOUtils;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.Socket;
 import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/*
 public class JavascriptInjectFilter implements Filter {
     public static String REDIRECT_HOST = null;
     public static int REDIRECT_PORT = 80;
@@ -199,3 +196,4 @@ public class JavascriptInjectFilter implements Filter {
         }
     }
 }
+*/
