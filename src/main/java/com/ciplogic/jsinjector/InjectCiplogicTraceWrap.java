@@ -16,8 +16,7 @@ public class InjectCiplogicTraceWrap extends JavaScriptBaseListener {
 
     @Override
     public void enterAnonymousFunction(@NotNull JavaScriptParser.AnonymousFunctionContext ctx) {
-        tokenStreamRewriter.insertBefore(ctx.start, "ftrace.wrap('<anonymous>','"  +  getLocation(ctx) + "',");
-        tokenStreamRewriter.insertAfter(ctx.stop, ")");
+        wrapFunction("<anonymous>", ctx.unnamedFunction());
     }
 
     @Override
@@ -26,24 +25,23 @@ public class InjectCiplogicTraceWrap extends JavaScriptBaseListener {
 
         JavaScriptParser.UnnamedFunctionContext unnamedFunctionContext = (JavaScriptParser.UnnamedFunctionContext) ctx.getChild(2);
 
-        String prefixWrap = String.format("ftrace.wrap('%s','" + getLocation(unnamedFunctionContext) + "',", name);
-        String suffixWrap = ")";
-
-        tokenStreamRewriter.insertBefore(unnamedFunctionContext.start, prefixWrap);
-        tokenStreamRewriter.insertAfter(unnamedFunctionContext.stop, suffixWrap);
+        wrapFunction(name, unnamedFunctionContext);
     }
 
     @Override
     public void enterObjectFunction(@NotNull JavaScriptParser.ObjectFunctionContext ctx) {
-        String name = ctx.getChild(0).getText();
+        String name = null;
+
+        if (ctx.string() != null) {
+            String text = ctx.string().getText();
+            name = text.substring(1, text.length() - 1);
+        } else if (ctx.identifier() != null) {
+            name = ctx.identifier().getText();
+        }
 
         JavaScriptParser.UnnamedFunctionContext unnamedFunctionContext = (JavaScriptParser.UnnamedFunctionContext) ctx.getChild(2);
 
-        String prefixWrap = String.format("ftrace.wrap('%s','" + getLocation(unnamedFunctionContext) + "',", name);
-        String suffixWrap = ")";
-
-        tokenStreamRewriter.insertBefore(unnamedFunctionContext.start, prefixWrap);
-        tokenStreamRewriter.insertAfter(unnamedFunctionContext.stop, suffixWrap);
+        wrapFunction(name, unnamedFunctionContext);
     }
 
     @Override
@@ -55,6 +53,32 @@ public class InjectCiplogicTraceWrap extends JavaScriptBaseListener {
 
         tokenStreamRewriter.insertBefore(ctx.start, prefixWrap);
         tokenStreamRewriter.insertAfter(ctx.stop, suffixWrap);
+    }
+
+    private void wrapFunction(String name, JavaScriptParser.UnnamedFunctionContext unnamedFunctionContext) {
+        if (unnamedFunctionContext.unnamedSimpleFunction() != null) {
+            wrapSimpleFunction(name, unnamedFunctionContext);
+        } else if (unnamedFunctionContext.unnamedContextFunction() != null) {
+            wrapFunctionCall(name, unnamedFunctionContext);
+        }
+    }
+
+    private void wrapSimpleFunction(String name, JavaScriptParser.UnnamedFunctionContext unnamedFunctionContext) {
+        String prefixWrap = String.format("ftrace.wrap('%s','" + getLocation(unnamedFunctionContext) + "',", name);
+        String suffixWrap = ")";
+
+        tokenStreamRewriter.insertBefore(unnamedFunctionContext.start, prefixWrap);
+        tokenStreamRewriter.insertAfter(unnamedFunctionContext.stop, suffixWrap);
+    }
+
+    private void wrapFunctionCall(String name, JavaScriptParser.UnnamedFunctionContext unnamedFunctionContext) {
+        String prefixWrap = String.format("ftrace.wrap('%s','" + getLocation(unnamedFunctionContext) + "',", name);
+        JavaScriptParser.InvocationExpressionsContext invocationsExpression = unnamedFunctionContext.unnamedContextFunction().invocationExpressions();
+        String suffixWrap = ")(" + invocationsExpression.expressions().getText() + ")";
+
+        tokenStreamRewriter.delete( invocationsExpression.start, invocationsExpression.stop );
+        tokenStreamRewriter.insertBefore(unnamedFunctionContext.start, prefixWrap);
+        tokenStreamRewriter.insertAfter(unnamedFunctionContext.stop, suffixWrap);
     }
 
     public String getFinalSource() {

@@ -31,6 +31,17 @@ public interface JavaScriptListener extends ParseTreeListener {
 	void exitRandomJunk(@NotNull JavaScriptParser.RandomJunkContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link JavaScriptParser#invocationExpressions}.
+	 * @param ctx the parse tree
+	 */
+	void enterInvocationExpressions(@NotNull JavaScriptParser.InvocationExpressionsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JavaScriptParser#invocationExpressions}.
+	 * @param ctx the parse tree
+	 */
+	void exitInvocationExpressions(@NotNull JavaScriptParser.InvocationExpressionsContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link JavaScriptParser#functionParams}.
 	 * @param ctx the parse tree
 	 */
@@ -73,6 +84,17 @@ public interface JavaScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunction(@NotNull JavaScriptParser.FunctionContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link JavaScriptParser#expressions}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressions(@NotNull JavaScriptParser.ExpressionsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JavaScriptParser#expressions}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressions(@NotNull JavaScriptParser.ExpressionsContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link JavaScriptParser#namedFunction}.

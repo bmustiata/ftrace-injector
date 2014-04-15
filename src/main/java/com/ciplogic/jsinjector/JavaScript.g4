@@ -28,7 +28,11 @@ anonymousFunction : unnamedFunction;
 
 unnamedFunction : unnamedContextFunction | unnamedSimpleFunction;
 
-unnamedContextFunction : '(' 'function' '(' functionParams? ')' block ')' '(' expression* ')';
+unnamedContextFunction : '(' 'function' '(' functionParams? ')' block ')' invocationExpressions;
+
+invocationExpressions : '(' expressions ')';
+
+expressions : expression*;
 
 unnamedSimpleFunction : 'function' '(' functionParams? ')' block;
 

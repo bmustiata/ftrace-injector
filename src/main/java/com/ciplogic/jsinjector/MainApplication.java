@@ -37,6 +37,7 @@ public class MainApplication {
         OutputStreamWriter writer = null;
         try {
             writer = new OutputStreamWriter(new FileOutputStream(jsFile), "utf-8");
+//            writer = new OutputStreamWriter(System.out, "utf-8");
             writer.write(traceWrapInjector.getFinalSource());
         } finally {
             IOUtils.closeQuietly(writer);
