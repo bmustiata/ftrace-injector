@@ -28,13 +28,13 @@ public class JavaScriptParser extends Parser {
 		RULE_objectFunction = 4, RULE_anonymousFunction = 5, RULE_unnamedFunction = 6, 
 		RULE_unnamedContextFunction = 7, RULE_unnamedSimpleFunction = 8, RULE_namedFunction = 9, 
 		RULE_functionParams = 10, RULE_functionParameter = 11, RULE_block = 12, 
-		RULE_comment = 13, RULE_identifier = 14, RULE_randomJunk = 15, RULE_string = 16, 
-		RULE_regexp = 17;
+		RULE_comment = 13, RULE_identifier = 14, RULE_regexp = 15, RULE_randomJunk = 16, 
+		RULE_string = 17;
 	public static final String[] ruleNames = {
 		"program", "expression", "function", "assignedFunction", "objectFunction", 
 		"anonymousFunction", "unnamedFunction", "unnamedContextFunction", "unnamedSimpleFunction", 
 		"namedFunction", "functionParams", "functionParameter", "block", "comment", 
-		"identifier", "randomJunk", "string", "regexp"
+		"identifier", "regexp", "randomJunk", "string"
 	};
 
 	@Override
@@ -888,6 +888,42 @@ public class JavaScriptParser extends Parser {
 		return _localctx;
 	}
 
+	public static class RegexpContext extends ParserRuleContext {
+		public TerminalNode REGEXP() { return getToken(JavaScriptParser.REGEXP, 0); }
+		public RegexpContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_regexp; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof JavaScriptListener ) ((JavaScriptListener)listener).enterRegexp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof JavaScriptListener ) ((JavaScriptListener)listener).exitRegexp(this);
+		}
+	}
+
+	public final RegexpContext regexp() throws RecognitionException {
+		RegexpContext _localctx = new RegexpContext(_ctx, getState());
+		enterRule(_localctx, 30, RULE_regexp);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(131); match(REGEXP);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
 	public static class RandomJunkContext extends ParserRuleContext {
 		public TerminalNode WORD() { return getToken(JavaScriptParser.WORD, 0); }
 		public TerminalNode SYMBOL() { return getToken(JavaScriptParser.SYMBOL, 0); }
@@ -912,12 +948,12 @@ public class JavaScriptParser extends Parser {
 
 	public final RandomJunkContext randomJunk() throws RecognitionException {
 		RandomJunkContext _localctx = new RandomJunkContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_randomJunk);
+		enterRule(_localctx, 32, RULE_randomJunk);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(131);
+			setState(133);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << WORD) | (1L << COMMA) | (1L << LP) | (1L << RP) | (1L << EQ) | (1L << COLON) | (1L << SYMBOL))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -955,53 +991,17 @@ public class JavaScriptParser extends Parser {
 
 	public final StringContext string() throws RecognitionException {
 		StringContext _localctx = new StringContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_string);
+		enterRule(_localctx, 34, RULE_string);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(133);
+			setState(135);
 			_la = _input.LA(1);
 			if ( !(_la==DOUBLE_QUOTE_STRING || _la==SINGLE_QUOTE_STRING) ) {
 			_errHandler.recoverInline(this);
 			}
 			consume();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class RegexpContext extends ParserRuleContext {
-		public TerminalNode REGEXP() { return getToken(JavaScriptParser.REGEXP, 0); }
-		public RegexpContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_regexp; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JavaScriptListener ) ((JavaScriptListener)listener).enterRegexp(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JavaScriptListener ) ((JavaScriptListener)listener).exitRegexp(this);
-		}
-	}
-
-	public final RegexpContext regexp() throws RecognitionException {
-		RegexpContext _localctx = new RegexpContext(_ctx, getState());
-		enterRule(_localctx, 34, RULE_regexp);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(135); match(REGEXP);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1032,13 +1032,13 @@ public class JavaScriptParser extends Parser {
 		"\2\2\30v\3\2\2\2\32x\3\2\2\2\34\u0081\3\2\2\2\36\u0083\3\2\2\2 \u0085"+
 		"\3\2\2\2\"\u0087\3\2\2\2$\u0089\3\2\2\2&(\5\4\3\2\'&\3\2\2\2(+\3\2\2\2"+
 		")\'\3\2\2\2)*\3\2\2\2*\3\3\2\2\2+)\3\2\2\2,\63\5\6\4\2-\63\5\32\16\2."+
-		"\63\5\34\17\2/\63\5 \21\2\60\63\5\"\22\2\61\63\5$\23\2\62,\3\2\2\2\62"+
+		"\63\5\34\17\2/\63\5\"\22\2\60\63\5$\23\2\61\63\5 \21\2\62,\3\2\2\2\62"+
 		"-\3\2\2\2\62.\3\2\2\2\62/\3\2\2\2\62\60\3\2\2\2\62\61\3\2\2\2\63\5\3\2"+
 		"\2\2\649\5\f\7\2\659\5\b\5\2\669\5\n\6\2\679\5\24\13\28\64\3\2\2\28\65"+
 		"\3\2\2\28\66\3\2\2\28\67\3\2\2\29\7\3\2\2\2:;\5\36\20\2;<\7\23\2\2<=\5"+
-		"\16\b\2=\t\3\2\2\2>A\5\"\22\2?A\5\36\20\2@>\3\2\2\2@?\3\2\2\2AB\3\2\2"+
-		"\2BC\7\24\2\2CD\5\16\b\2D\13\3\2\2\2EF\5\16\b\2F\r\3\2\2\2GJ\5\20\t\2"+
-		"HJ\5\22\n\2IG\3\2\2\2IH\3\2\2\2J\17\3\2\2\2KL\7\21\2\2LM\7\n\2\2MO\7\21"+
+		"\16\b\2=\t\3\2\2\2>A\5$\23\2?A\5\36\20\2@>\3\2\2\2@?\3\2\2\2AB\3\2\2\2"+
+		"BC\7\24\2\2CD\5\16\b\2D\13\3\2\2\2EF\5\16\b\2F\r\3\2\2\2GJ\5\20\t\2HJ"+
+		"\5\22\n\2IG\3\2\2\2IH\3\2\2\2J\17\3\2\2\2KL\7\21\2\2LM\7\n\2\2MO\7\21"+
 		"\2\2NP\5\26\f\2ON\3\2\2\2OP\3\2\2\2PQ\3\2\2\2QR\7\22\2\2RS\5\32\16\2S"+
 		"T\7\22\2\2TX\7\21\2\2UW\5\4\3\2VU\3\2\2\2WZ\3\2\2\2XV\3\2\2\2XY\3\2\2"+
 		"\2Y[\3\2\2\2ZX\3\2\2\2[\\\7\22\2\2\\\21\3\2\2\2]^\7\n\2\2^`\7\21\2\2_"+
@@ -1049,8 +1049,8 @@ public class JavaScriptParser extends Parser {
 		"\2vw\7\13\2\2w\31\3\2\2\2x|\7\16\2\2y{\5\4\3\2zy\3\2\2\2{~\3\2\2\2|z\3"+
 		"\2\2\2|}\3\2\2\2}\177\3\2\2\2~|\3\2\2\2\177\u0080\7\17\2\2\u0080\33\3"+
 		"\2\2\2\u0081\u0082\t\2\2\2\u0082\35\3\2\2\2\u0083\u0084\7\13\2\2\u0084"+
-		"\37\3\2\2\2\u0085\u0086\t\3\2\2\u0086!\3\2\2\2\u0087\u0088\t\4\2\2\u0088"+
-		"#\3\2\2\2\u0089\u008a\7\b\2\2\u008a%\3\2\2\2\r)\628@IOX`is|";
+		"\37\3\2\2\2\u0085\u0086\7\b\2\2\u0086!\3\2\2\2\u0087\u0088\t\3\2\2\u0088"+
+		"#\3\2\2\2\u0089\u008a\t\4\2\2\u008a%\3\2\2\2\r)\628@IOX`is|";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

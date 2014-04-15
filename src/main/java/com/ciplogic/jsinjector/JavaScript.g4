@@ -44,11 +44,11 @@ comment : LINE_COMMENT | MULTILINE_COMMENT;
 
 identifier : WORD;
 
+regexp : REGEXP;
+
 randomJunk : WORD | SYMBOL | COMMA | EQ | COLON | LP | RP;
 
 string : SINGLE_QUOTE_STRING | DOUBLE_QUOTE_STRING;
-
-regexp : REGEXP;
 
 DOUBLE_QUOTE_STRING : '"' (ESC|.)*? '"';
 SINGLE_QUOTE_STRING : '\'' (ESC|.)*? '\'';
@@ -59,7 +59,7 @@ LINE_COMMENT : '//' .*? '\n' -> channel(COMMENTS);
 
 MULTILINE_COMMENT : '/*' .*? '*/' -> channel(COMMENTS);
 
-REGEXP : '/' (REGEXP_ESC|[^\n])*? '/';
+REGEXP : '/' (REGEXP_ESC|~'\n')+? '/';
 
 REGEXP_ESC : '\\/';
 
