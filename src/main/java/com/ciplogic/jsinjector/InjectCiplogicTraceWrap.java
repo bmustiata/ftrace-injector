@@ -49,7 +49,9 @@ public class InjectCiplogicTraceWrap extends JavaScriptBaseListener {
         String name = ctx.getChild(1).getText();
 
         String prefixWrap = String.format("function %s() { return ftrace.wrap('%s', '" + getLocation(ctx) + "', function() {", name, name);
-        String suffixWrap = String.format(" return %s.apply(this,arguments); }).apply(this,arguments); }", name);
+        String suffixWrap = String.format(" return __ciplogic_%s.apply(this,arguments); }).apply(this,arguments); }", name);
+
+        tokenStreamRewriter.insertBefore(ctx.identifier().start, "__ciplogic_");
 
         tokenStreamRewriter.insertBefore(ctx.start, prefixWrap);
         tokenStreamRewriter.insertAfter(ctx.stop, suffixWrap);
